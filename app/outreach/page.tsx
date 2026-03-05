@@ -57,7 +57,7 @@ function OutreachPageInner() {
     <div style={{ padding: '48px 48px 80px', maxWidth: '900px' }}>
       <PageHeader title="Outreach Generator" subtitle="Generate LinkedIn + email sequences for any partnership prospect" />
 
-      <Card style={{ marginBottom: '28px' }}>
+      <Card style={{ marginBottom: '28px', overflow: 'visible' }}>
         <SectionLabel>Configuration</SectionLabel>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
