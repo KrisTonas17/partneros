@@ -43,7 +43,7 @@ function ActivationPlanPageInner() {
     <div style={{ padding: '48px 48px 80px', maxWidth: '900px' }}>
       <PageHeader title="Activation Plan" subtitle="Generate a phased launch plan for any partner" />
 
-      <Card style={{ marginBottom: '28px' }}>
+      <Card style={{ marginBottom: '28px', overflow: 'visible' }}>
         <SectionLabel>Select Partner</SectionLabel>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '12px', alignItems: 'flex-end' }}>
           <select
