@@ -1,4 +1,4 @@
-import { put, list, del, getDownloadUrl } from '@vercel/blob';
+import { put, list, del } from '@vercel/blob';
 
 export interface Partner {
   id: string;
@@ -61,13 +61,19 @@ export interface DbStore {
 
 const BLOB_PATH = 'partneros-db.json';
 
+function getToken(): string {
+  const token = process.env.BLOB_READ_WRITE_TOKEN;
+  if (!token) throw new Error('BLOB_READ_WRITE_TOKEN is not set');
+  return token;
+}
+
 export async function readDb(): Promise<DbStore> {
   try {
-    const { blobs } = await list({ prefix: BLOB_PATH });
+    const token = getToken();
+    const { blobs } = await list({ prefix: BLOB_PATH, token });
     if (blobs.length === 0) return { partners: {}, deals: {}, outreach: {} };
 
-    const downloadUrl = await getDownloadUrl(blobs[0].url);
-    const res = await fetch(downloadUrl, { cache: 'no-store' });
+    const res = await fetch(blobs[0].url, { cache: 'no-store' });
     if (!res.ok) return { partners: {}, deals: {}, outreach: {} };
     return await res.json();
   } catch (e) {
@@ -77,15 +83,18 @@ export async function readDb(): Promise<DbStore> {
 }
 
 export async function writeDb(store: DbStore): Promise<void> {
+  const token = getToken();
   try {
-    const { blobs } = await list({ prefix: BLOB_PATH });
+    const { blobs } = await list({ prefix: BLOB_PATH, token });
     if (blobs.length > 0) {
-      await del(blobs.map(b => b.url));
+      await del(blobs.map(b => b.url), { token });
     }
 
     await put(BLOB_PATH, JSON.stringify(store), {
-      access: 'private',
+      access: 'public',
       contentType: 'application/json',
+      addRandomSuffix: false,
+      token,
     });
   } catch (e) {
     console.error('writeDb error:', e);
