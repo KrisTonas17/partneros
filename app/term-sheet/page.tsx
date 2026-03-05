@@ -62,7 +62,7 @@ function TermSheetPageInner() {
     <div style={{ padding: '48px 48px 80px', maxWidth: '900px' }}>
       <PageHeader title="Term Sheet" subtitle="Generate a deal summary document for any partner" />
 
-      <Card style={{ marginBottom: '28px' }}>
+      <Card style={{ marginBottom: '28px', overflow: 'visible' }}>
         <SectionLabel>Configuration</SectionLabel>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '12px', alignItems: 'flex-end' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
